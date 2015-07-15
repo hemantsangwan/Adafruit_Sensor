@@ -58,7 +58,9 @@ typedef enum
   SENSOR_TYPE_AMBIENT_TEMPERATURE   = (13),
   SENSOR_TYPE_VOLTAGE               = (15),
   SENSOR_TYPE_CURRENT               = (16),
-  SENSOR_TYPE_COLOR                 = (17)
+  SENSOR_TYPE_COLOR                 = (17),
+  SENSOR_TYPE_BINARY                = (18),
+  SENSOR_TYPE_MOTION                = (19)
 } sensors_type_t;
 
 /** struct sensors_vec_s is used to return a vector in a common format. */
@@ -72,9 +74,9 @@ typedef struct {
         };
         /* Orientation sensors */
         struct {
-            float roll;    /**< Rotation around the longitudinal axis (the plane body, 'X axis'). Roll is positive and increasing when moving downward. -90°<=roll<=90° */
-            float pitch;   /**< Rotation around the lateral axis (the wing span, 'Y axis'). Pitch is positive and increasing when moving upwards. -180°<=pitch<=180°) */
-            float heading; /**< Angle between the longitudinal axis (the plane body) and magnetic north, measured clockwise when viewing from the top of the device. 0-359° */
+            float roll;    /**< Rotation around the longitudinal axis (the plane body, 'X axis'). Roll is positive and increasing when moving downward. -90Â°<=roll<=90Â° */
+            float pitch;   /**< Rotation around the lateral axis (the wing span, 'Y axis'). Pitch is positive and increasing when moving upwards. -180Â°<=pitch<=180Â°) */
+            float heading; /**< Angle between the longitudinal axis (the plane body) and magnetic north, measured clockwise when viewing from the top of the device. 0-359Â° */
         };
     };
     int8_t status;
@@ -107,6 +109,7 @@ typedef struct
     union
     {
         float           data[4];
+        uint8_t         state;
         sensors_vec_t   acceleration;         /**< acceleration values are in meter per second per second (m/s^2) */
         sensors_vec_t   magnetic;             /**< magnetic vector values are in micro-Tesla (uT) */
         sensors_vec_t   orientation;          /**< orientation values are in degrees */
@@ -148,7 +151,7 @@ class Adafruit_Sensor {
   virtual void getSensor(sensor_t*) = 0;
   
  private:
-  bool _autoRange;
+  bool _autoRange = false;
 };
 
 #endif

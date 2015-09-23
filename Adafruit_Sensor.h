@@ -60,7 +60,8 @@ typedef enum
   SENSOR_TYPE_CURRENT               = (16),
   SENSOR_TYPE_COLOR                 = (17),
   SENSOR_TYPE_BINARY                = (18),
-  SENSOR_TYPE_MOTION                = (19)
+  SENSOR_TYPE_MOTION                = (19),
+  SENSOR_TYPE_DISTANCE                = (20)
 } sensors_type_t;
 
 /** struct sensors_vec_s is used to return a vector in a common format. */
@@ -102,7 +103,7 @@ typedef struct {
 typedef struct
 {
     int32_t version;                          /**< must be sizeof(struct sensors_event_t) */
-    int32_t sensor_id;                        /**< unique sensor identifier */
+    int8_t sensor_id;                        /**< unique sensor identifier */
     int32_t type;                             /**< sensor type */
     int32_t reserved0;                        /**< reserved */
     int32_t timestamp;                        /**< time is in milliseconds */
